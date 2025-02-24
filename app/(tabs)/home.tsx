@@ -9,6 +9,11 @@ import tw from 'twrnc'
 import { AntDesign, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import Menu from '@/components/Menu';
 import { useState } from 'react';
+import CardEvent from '@/components/CardEvent';
+import CoursesMenu from '@/components/CoursesMenu';
+import NewsList from '@/components/NewsList';
+import NewsMenu from '@/components/NewsMenu';
+import { Link } from 'expo-router';
 export default function HomeScreen() {
 
   const [isOpen, setIsOpen] = useState(true);
@@ -16,7 +21,18 @@ export default function HomeScreen() {
     setIsOpen(false);
   }
 
+  const NewsLists = [ 'Modul', 'Watchlist', 'News', 'Events', 'Reports' ,'Record']
 
+  const courses = [
+    {title: 'Manajemen Income' , icon: 'money'},
+    {title: 'Asuransi' , icon: 'health-and-safety'},
+    {title: 'Saham' , icon: 'query-stats'},
+    {title: 'Saham' , icon: 'query-stats'},
+    {title: 'Cryptocurrency' , icon: 'currency-bitcoin'},
+    {title: 'Peer-to-Peer Landing' , icon: 'connect-without-contact'},
+    {title: 'Obligasi' , icon: 'file-copy'},
+    {title: 'Lainnya' , icon: 'grid-view'},
+  ]
   const menus = [
     { title: 'Modul Akademi', icon: 'graduation-cap' },
     { title: 'Community', icon: 'users' },
@@ -31,7 +47,7 @@ export default function HomeScreen() {
             <Text style={tw`font-semibold text-base text-white`}>Hai, Calon Sultan!</Text>
             <View style={tw`items-center flex-row gap-3`}>
               <MaterialCommunityIcons name='comment-text-multiple' size={24} style={tw`text-white`} />
-              <MaterialIcons name='account-circle' size={24} style={tw`text-neutral-400`} />
+              <Link href='/profile'><MaterialIcons name='account-circle' size={24} style={tw`text-neutral-400`} /></Link>
             </View>
           </View>
           {isOpen && ( // Only render when isOpen is true
@@ -52,11 +68,68 @@ export default function HomeScreen() {
             </View>
           </ScrollView>
           <View style={tw`flex-row flex-wrap gap-3`}>
-            {menus.map((menu) => (
-              <Menu title={menu.title} icon={menu.icon} />
+            {menus.map((menu, index) => (
+              <Menu key={index} title={menu.title} icon={menu.icon} />
             ))}
           </View>
+          <View style={tw`w-full mt-5 rounded-lg bg-neutral-800 flex-row gap-4 px-4 py-3 items-center`}>
+          <Image source={require('@/assets/images/favicon.png')} style={tw`rounded-lg h-12 w-12`} />
+            <View style={tw `mr-4`}>
+              <Text style={tw`text-white font-semibold`}>Yuk, Ikuti <Text style={tw`text-[#97F69B]`}>Tes Finansial</Text>!</Text>
+              <Text style={tw`text-white text-[2.6]`}>Dapatkan Saran & Rekomendasi Belajarmu</Text>
+            </View>
+            <View style={tw `bg-[#97F69B] rounded-full p-2`}>
+              <AntDesign name='arrowright' style={tw `text-right`} size={12} />
+            </View>
+          </View>
+          
+          <View style={tw `flex-row justify-between my-6`}>
+            <View style={tw `flex-row items-center gap-1`}>
+              <AntDesign name='calendar' color='white' />
+              <Text style={tw `text-white text-[3]`}>Ikuti Live Event Terdekat</Text>
+            </View>
+            <Text style={tw `text-white text-[2.8]`}>Lihat Semua</Text>
+          </View>
+          <ScrollView  horizontal>
+            <View style={tw `w-full flex-row flex-wrap gap-3`}>
+              <CardEvent/>
+              <CardEvent/>
+            </View>
+          </ScrollView>
+          <ScrollView  horizontal>
+            <View style={tw `mt-3 w-full flex-row flex-wrap gap-3`}>
+              <CardEvent/>
+              <CardEvent/>
+            </View>
+          </ScrollView>
 
+          <View style={tw `w-full bg-neutral-800 rounded-lg p-4 mt-5`}>
+            <Text style={tw `text-white`}>📅 Mau Belajar Apa Hari ini</Text>
+            <View style={tw `flex-row flex-wrap gap-y-4 w-full mt-6`}>
+            {courses.map((course, index) => (
+              <CoursesMenu key={index} title={course.title} icon={course.icon}/>
+            ))}
+            </View>
+          </View>
+
+          <View style={tw `mt-5`}>
+            <Text style={tw `text-white`}>🎉 Terbaru di Ternak Uang!</Text>
+          </View> 
+          <ScrollView horizontal>
+          <View style={tw `flex-row gap-4 my-5`}>
+            {NewsLists.map((list) => (
+              <NewsList title={list}/>
+            ))}
+          </View>
+          </ScrollView>
+
+          <ScrollView horizontal>
+            <View style={tw `flex-row gap-4`}>
+              <NewsMenu source={require('@/assets/images/tmt.jpg')} title='Bisnis untung kecil' desc='Extreme' list='1 Video'/>
+              <NewsMenu source={require('@/assets/images/tmt.jpg')} title='Bisnis untung kecil' desc='Extreme' list='1 Video'/>
+              <NewsMenu source={require('@/assets/images/tmt.jpg')} title='Bisnis untung kecil' desc='Extreme' list='1 Video'/>
+            </View>
+          </ScrollView>
 
 
         </View>
